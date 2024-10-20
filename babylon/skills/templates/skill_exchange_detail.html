@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skill Exchange Details</title>
+</head>
+<body>
+    <h1>Skill Exchange Details</h1>
+
+    <p><strong>Offered By:</strong> {{ exchange.offered_by.user.username }}</p>
+    <p><strong>Requested By:</strong> {{ exchange.requested_by.user.username }}</p>
+    <p><strong>Status:</strong> {{ exchange.status }}</p>
+    <p><strong>Type:</strong> {% if exchange.is_paid_service %}Paid{% else %}Barter{% endif %}</p>
+
+    <h2>Skills Offered:</h2>
+    <ul>
+        {% for skill in exchange.skills_offered.all %}
+            <li>{{ skill.name }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Skills Requested:</h2>
+    <ul>
+        {% for skill in exchange.skills_requested.all %}
+            <li>{{ skill.name }}</li>
+        {% endfor %}
+    </ul>
+
+    {% if exchange.status == 'PENDING' %}
+        <form method="POST">
+            {% csrf_token %}
+            <button type="submit" name="accept">Accept</button>
+            <button type="submit" name="reject">Reject</button>
+        </form>
+    {% endif %}
+
+    <a href="{% url 'skill_exchange_list' %}">Back to Exchanges</a>
+</body>
+</html>

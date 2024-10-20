@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Babylon</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'skills/css/styles.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <video autoplay muted loop id="bg-video">
+        <source src="{% static 'skills/videos/Bg.mp4' %}" type="video/mp4">
+    </video>
+
+    <nav>
+        <div class="logo">
+            <img src="{% static 'skills/images/babylon_logo.png' %}" alt="Babylon Logo" class="rotate-on-hover">
+     
+        </div>
+        <ul>
+            <li><a href="{% url 'home' %}">Home</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <h1 class="page-title">Sign Up</h1>
+        <div class="form-container">
+            <form method="POST" id="signup-form">
+                {% csrf_token %}
+                <label for="username">Username:</label>
+                <input type="text" name="username" id="username" value="{{ username }}" required>
+
+                <label for="password">Password:</label>
+                <input type="password" name="password" id="password" required>
+
+                <label for="password_confirm">Confirm Password:</label>
+                <input type="password" name="password_confirm" id="password_confirm" required>
+
+                <button type="submit" class="cta-btn">Sign Up</button>
+            </form>
+            <div class="error-container" id="error-container">
+                <strong>Errors:</strong>
+                <ul id="error-list">
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <p class="form-footer">Already have an account? <a href="{% url 'login' %}">Login</a></p>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Babylon Skill Bartering Platform. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Show error container if there are error messages
+        const errorContainer = document.getElementById(' error-container');
+        if (errorContainer.querySelector('#error-list').children.length > 0) {
+            errorContainer.style.display = 'block';
+        }
+    </script>
+</body>
+</html>

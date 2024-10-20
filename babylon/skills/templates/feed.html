@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Feed</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+        .profile-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            padding: 15px;
+        }
+        .profile-card h3 {
+            margin: 0;
+            color: #333;
+        }
+        .skills {
+            margin-top: 10px;
+            color: #555;
+        }
+        .buttons {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>User Feed</h1>
+
+    <div>
+        {% for profile in profiles %}
+            <div class="profile-card">
+                <h3>{{ profile.user.username }}</h3>
+                <div class="skills">
+                    <strong>Skills Offered:</strong>
+                    {% for skill in profile.skills_offered.all %}
+                        <span>{{ skill.name }}</span>{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="skills">
+                    <strong>Skills Requested:</strong>
+                    {% for skill in profile.skills_requested.all %}
+                        <span>{{ skill.name }}</span>{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </div>
+                
+                <!-- Buttons to Visit Profile and Exchange Skills -->
+                <div class="buttons">
+                    <a href="{% url 'profile_view' profile.user.id %}" class="btn btn-primary">
+                        Visit Profile
+                    </a>
+                    <a href="{% url 'exchange_skills' profile.user.id %}" class="btn btn-success">
+                        Exchange Skills
+                    </a>
+                </div>
+            </div>
+        {% empty %}
+            <p>No users available.</p>
+        {% endfor %}
+    </div>
+</body>
+</html>

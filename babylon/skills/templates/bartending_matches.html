@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bartending Matches</title>
+</head>
+<body>
+    <h1>Bartending Skill Exchange</h1>
+
+    <h2>Users Offering Bartending Skills</h2>
+    <ul>
+        {% for user in offering_bartending %}
+            <li>{{ user.user.username }} offers Bartending skills.</li>
+        {% empty %}
+            <li>No users found offering Bartending skills.</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Users Requesting Bartending Skills</h2>
+    <ul>
+        {% for user in requesting_bartending %}
+            <li>{{ user.user.username }} is looking to learn Bartending.</li>
+        {% empty %}
+            <li>No users found requesting Bartending skills.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

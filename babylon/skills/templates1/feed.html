@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feed</title>
+    <link rel="stylesheet" href="{% static 'skills/css/styles.css' %}">
+</head>
+<body>
+    <h1>Matching Profiles</h1>
+    {% if matching_profiles %}
+        <ul>
+            {% for profile in matching_profiles %}
+                <li>
+                    <strong>{{ profile.user.username }}</strong>: 
+                    Skills: {{ profile.skills.all|join:", " }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No matching profiles found.</p>
+    {% endif %}
+    <a href="{% url 'profile' %}" class="button">Your Profile</a>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+</head>
+<body>
+    <h1>User Profile</h1>
+
+    {% if user_profile.profile_photo %}
+        <img src="{{ user_profile.profile_photo.url }}" alt="Profile Photo" width="150" height="150">
+    {% else %}
+        <p>No profile photo uploaded.</p>
+    {% endif %}
+
+    <p><strong>Username:</strong> {{ user_profile.user.username }}</p>
+    <p><strong>Bio:</strong> {{ user_profile.bio }}</p>
+    <p><strong>Location:</strong> {{ user_profile.location }}</p>
+    <p><strong>Professional Status:</strong> {{ user_profile.is_professional|yesno:"Yes,No" }}</p>
+    {% if user_profile.is_professional %}
+        <p><strong>Hourly Rate:</strong> ${{ user_profile.hourly_rate }}</p>
+    {% endif %}
+
+    <p><strong>Skills Offered:</strong> 
+        {% for skill in user_profile.skills_offered.all %}
+            {{ skill.name }}{% if not forloop.last %}, {% endif %}
+        {% endfor %}
+    </p>
+
+    <p><strong>Skills Requested:</strong> 
+        {% for skill in user_profile.skills_requested.all %}
+            {{ skill.name }}{% if not forloop.last %}, {% endif %}
+        {% endfor %}
+    </p>
+
+    <a href="{% url 'edit_profile' %}">Edit Profile</a>
+</body>
+</html>

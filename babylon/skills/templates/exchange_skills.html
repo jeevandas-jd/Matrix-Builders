@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exchange Skills</title>
+</head>
+<body>
+    <h1>Exchange Skills with {{ profile.user.username }}</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Confirm Exchange</button>
+    </form>
+</body>
+</html>

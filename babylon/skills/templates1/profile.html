@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile - Babylon</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'skills/css/styles.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav>
+        <div class="logo">
+            <img src="{% static 'skills/images/babylon_logo.png' %}" alt="Babylon Logo" >
+            
+        </div>
+        <ul>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'profile' %}" class="active">Profile</a></li>
+            <li><a href="{% url 'skill_exchange_list' %}">Exchanges</a></li>
+            <li><a href="{% url 'create_skill_exchange' %}">Create Exchange</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <h1 class="page-title">User Profile</h1>
+
+        <div class="form-container">
+            {% if user_profile.profile_photo %}
+                <img src="{{ user_profile.profile_photo.url }}" alt="Profile Photo" width="150" height="150" class="profile-photo">
+            {% else %}
+                <p>No profile photo uploaded.</p>
+            {% endif %}
+
+            <p><strong>Username:</strong> {{ user_profile.user.username }}</p>
+            <p><strong>Bio:</strong> {{ user_profile.bio }}</p>
+            <p><strong>Location:</strong> {{ user_profile.location }}</p>
+            <p><strong>Professional Status:</strong> {{ user_profile.is_professional|yesno:"Yes,No" }}</p>
+            {% if user_profile.is_professional %}
+                <p><strong>Hourly Rate:</strong> ${{ user_profile.hourly_rate }}</p>
+            {% endif %}
+
+            <p><strong>Skills Offered:</strong> 
+                {% for skill in user_profile.skills_offered.all %}
+                    {{ skill.name }}{% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            </p>
+
+            <p><strong>Skills Requested:</strong> 
+                {% for skill in user_profile.skills_requested.all %}
+                    {{ skill.name }}{% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            </p>
+
+            <div class="profile-actions">
+                <a href="{% url 'edit_profile' %}" class="cta-btn pulse-on-hover">Edit Profile</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Babylon Skill Bartering Platform. All rights reserved.</p>
+    </footer>
+
+    <script src="{% static 'skills/js/scripts.js' %}"></script>
+</body>
+</html>

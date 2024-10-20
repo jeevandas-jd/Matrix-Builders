@@ -1,0 +1,26 @@
+# Django Framework
+Django==4.2.6
+
+# Orkes Conductor Python client library for interacting with workflows
+conductor-python==3.4.0
+
+# Requests library for making API calls to Orkes Conductor or other services
+requests==2.31.0
+
+# Optional: Django REST framework if you're using it for building APIs
+djangorestframework==3.14.0
+
+# Optional: Django CORS headers for handling cross-origin requests
+django-cors-headers==3.14.0
+
+# Optional: Any additional libraries you need for database support, such as PostgreSQL
+psycopg2==2.9.6
+
+# Optional: Gunicorn for deployment
+gunicorn==20.1.0
+
+# Optional: For handling environment variables
+python-dotenv==1.0.0
+
+# Add any other libraries you have used in your project
+

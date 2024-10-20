@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skill Exchanges - Babylon</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'skills/css/styles.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <nav>
+        <div class="logo">
+            <img src="{% static 'skills/images/babylon_logo.png' %}" alt="Babylon Logo" class="rotate-on-hover">
+
+        </div>
+        <ul>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'skill_exchange_list' %}" class="active">Exchanges</a></li>
+            <li><a href="{% url 'create_skill_exchange' %}">Create Exchange</a></li>
+            <li><a href="{% url 'feed' %}">Feed</a></li>
+        </ul>
+        <div class="user-actions">
+            <a href="{% url 'profile' %}" class="profile-link">{{ user.username }}</a>
+            <a href="{% url 'logout' %}" class="logout-btn">Logout</a>
+        </div>
+    </nav>
+
+    <main>
+        <h1 class="page-title">Your Skill Exchanges</h1>
+        <div class="exchanges-container">
+            <table class="exchanges-table">
+                <thead>
+                    <tr>
+                        <th><i class="fas fa-user-circle"></i> Offered By</th>
+                        <th><i class="fas fa-user-circle"></i> Requested By</th>
+                        <th><i class="fas fa-info-circle"></i> Status</th>
+                        <th><i class="fas fa-tag"></i> Type</th>
+                        <th><i class="fas fa-eye"></i> Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for exchange in exchanges %}
+                    <tr>
+                        <td>{{ exchange.offered_by.user.username }}</td>
+                        <td>{{ exchange.requested_by.user.username }}</td>
+                        <td class="status-{{ exchange.status|lower }}">{{ exchange.status }}</td>
+                        <td>{% if exchange.is_paid_service %}Paid{% else %}Barter{% endif %}</td>
+                        <td><a href="{% url 'skill_exchange_detail' exchange.id %}" class="view-btn">View</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="action-buttons">
+            <span>.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-. </span>
+            <a href="{% url 'create_skill_exchange' %}" class="cta-btn"><i class="fas fa-plus"></i> Create New Exchange</a>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Babylon Skill Bartering Platform. All rights reserved.</p>
+    </footer>
+</body>
+</html>

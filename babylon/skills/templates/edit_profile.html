@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+</head>
+<body>
+    <h1>Edit Profile</h1>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <label for="bio">Bio:</label>
+        <textarea name="bio">{{ user_profile.bio }}</textarea><br>
+
+        <label for="location">Location:</label>
+        <input type="text" name="location" value="{{ user_profile.location }}"><br>
+
+        <label for="skills_offered">Skills Offered:</label>
+        <select name="skills_offered" multiple>
+            {% for skill in all_skills %}
+                <option value="{{ skill.id }}" {% if skill in user_profile.skills_offered.all %}selected{% endif %}>
+                    {{ skill.name }}
+                </option>
+            {% endfor %}
+        </select><br>
+
+        <label for="skills_requested">Skills Requested:</label>
+        <select name="skills_requested" multiple>
+            {% for skill in all_skills %}
+                <option value="{{ skill.id }}" {% if skill in user_profile.skills_requested.all %}selected{% endif %}>
+                    {{ skill.name }}
+                </option>
+            {% endfor %}
+        </select><br>
+
+        <label for="profile_photo">Profile Photo:</label>
+        <input type="file" name="profile_photo"><br>
+
+        <button type="submit">Update Profile</button>
+    </form>
+
+    <p><a href="{% url 'profile' %}">Back to Profile</a></p>
+</body>
+</html>
+    

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Babylon Skill Bartering Platform</title>
+    <!-- Load the static tag library -->
+    {% load static %}
+    <!-- Link to CSS -->
+    <link rel="stylesheet" href="{% static 'skills/css/styles.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Babylon - Skill Bartering Platform</h1>
+        <p>Trade your skills and knowledge without using money. Or transition to a professional tutor and get paid for your expertise!</p>
+
+        {% if user.is_authenticated %}
+            <p>Welcome back, {{ user.username }}!</p>
+            <a href="{% url 'profile' %}">Go to your Profile</a>
+            <a href="{% url 'skill_exchange_list' %}">View Skill Exchanges</a>
+            <a href="{% url 'create_skill_exchange' %}">Create New Skill Exchange</a>
+            <a href="{% url 'logout' %}">Logout</a>
+            <a href="{% url 'feed' %}">Feed</a>
+            <a href="{% url 'bartending_matches' %}">Matches</a>
+        {% else %}
+            <p><a href="{% url 'login' %}">Login</a> or <a href="{% url 'signup' %}">Sign Up</a> to start bartering your skills!</p>
+        {% endif %}
+    </div>
+    
+    <!-- Link to JS -->
+    <script src="{% static 'skills/js/scripts.js' %}"></script>
+</body>
+</html>

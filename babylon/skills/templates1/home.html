@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Babylon Skill Bartering Platform</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'skills/css/styles.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    
+
+    <nav>
+        <div class="logo">
+            <img src="{% static 'skills/images/babylon_logo.png' %}" alt="Babylon Logo" class="rotate-on-hover" >
+        </div>
+        <ul>
+            <li><a href="{% url 'home' %}" class="active">Home</a></li>
+            {% if user.is_authenticated %}
+                <li><a href="{% url 'skill_exchange_list' %}">Exchanges</a></li>
+                <li><a href="{% url 'create_skill_exchange' %}">Create Exchange</a></li>
+                <li><a href="{% url 'feed' %}">Feed</a></li>
+            {% endif %}
+        </ul>
+        <div class="user-actions">
+            {% if user.is_authenticated %}
+                <a href="{% url 'profile' %}" class="profile-link">{{ user.username }}</a>
+                <a href="{% url 'logout' %}" class="logout-btn">Logout</a>
+            {% else %}
+                <a href="{% url 'login' %}" class="cta-btn">Login</a>
+                <a href="{% url 'signup' %}" class="cta-btn">Sign Up</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <h1>Welcome to </h1>
+            <img src="{% static 'skills/images/babylon_logo.png' %}" alt="Babylon Logo" class="rotate-on-hover" >
+            <p class="fade-in">Trade your skills and knowledge without using money. Or transition to a professional tutor and get paid for your expertise!</p>
+            {% if not user.is_authenticated %}
+                <a href="{% url 'signup' %}" class="cta-btn shake-on-hover">Get Started</a>
+            {% endif %}
+        </section>
+
+        <section class="features">
+            <div class="feature-card slide-in-left">
+                <i class="fas fa-exchange-alt"></i>
+                <h2>Skill Exchange</h2>
+                <p>Connect with others and trade your skills</p>
+            </div>
+            <div class="feature-card slide-in-bottom">
+                <i class="fas fa-graduation-cap"></i>
+                <h2>Learn & Grow</h2>
+                <p>Expand your knowledge through peer-to-peer learning</p>
+            </div>
+            <div class="feature-card slide-in-right">
+                <i class="fas fa-dollar-sign"></i>
+                <h2>Monetize Skills</h2>
+                <p>Transition to professional tutoring when you're ready</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Babylon Skill Bartering Platform. All rights reserved.</p>
+    </footer>
+
+    <script src="{% static 'skills/js/scripts.js' %}"></script>
+</body>
+</html>

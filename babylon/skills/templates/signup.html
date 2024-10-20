@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        .error-container {
+            display: none; /* Initially hidden */
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+            padding: 10px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Sign Up</h1>
+
+    <form method="POST" id="signup-form">
+        {% csrf_token %}
+        <label for="username">Username:</label>
+        <input type="text" name="username" value="{{ username }}" required><br>
+
+        <label for="password">Password:</label>
+        <input type="password" name="password" required><br>
+
+        <label for="password_confirm">Password confirmation:</label>
+        <input type="password" name="password_confirm" required><br>
+
+        <button type="submit">Sign Up</button>
+    </form>
+
+    <div class="error-container" id="error-container">
+        <strong>Errors:</strong>
+        <ul id="error-list">
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
+
+    <script>
+        // Show error container if there are error messages
+        const errorContainer = document.getElementById('error-container');
+        if (errorContainer.children.length > 0) {
+            errorContainer.style.display = 'block';
+        }
+    </script>
+</body>
+</html>

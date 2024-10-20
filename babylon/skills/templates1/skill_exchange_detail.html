@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skill Exchange Details - Babylon</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'skills/css/styles.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <nav>
+        <div class="logo">
+            <img src="{% static 'skills/images/babylon_logo.png' %}" alt="Babylon Logo" class="rotate-on-hover">
+        </div>
+        <ul>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'skill_exchange_list' %}" class="active">Exchanges</a></li>
+            <li><a href="{% url 'create_skill_exchange' %}">Create Exchange</a></li>
+            <li><a href="{% url 'feed' %}">Feed</a></li>
+        </ul>
+        <div class="user-actions">
+            <a href="{% url 'profile' %}" class="profile-link">{{ user.username }}</a>
+            <a href="{% url 'logout' %}" class="logout-btn">Logout</a>
+        </div>
+    </nav>
+
+    <main>
+        <h1 class="page-title">Skill Exchange Details</h1>
+        <div class="exchange-details">
+            <div class="detail-row">
+                <span class="detail-label"><i class="fas fa-user-circle"></i> Offered By:</span>
+                <span class="detail-value">{{ exchange.offered_by.user.username }}</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label"><i class="fas fa-user-circle"></i> Requested By:</span>
+                <span class="detail-value">{{ exchange.requested_by.user.username }}</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label"><i class="fas fa-info-circle"></i> Status:</span>
+                <span class="detail-value status-{{ exchange.status|lower }}">{{ exchange.status }}</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label"><i class="fas fa-tag"></i> Type:</span>
+                <span class="detail-value">{% if exchange.is_paid_service %}Paid{% else %}Barter{% endif %}</span>
+            </div>
+
+            <div class="skills-section">
+                <h2><i class="fas fa-gift"></i> Skills Offered:</h2>
+                <ul class="skills-list">
+                    {% for skill in exchange.skills_offered.all %}
+                        <li>{{ skill.name }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="skills-section">
+                <h2><i class="fas fa-hand-holding"></i> Skills Requested:</h2>
+                <ul class="skills-list">
+                    {% for skill in exchange.skills_requested.all %}
+                        <li>{{ skill.name }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            {% if exchange.status == 'PENDING' %}
+                <form method="POST" class="exchange-actions">
+                    {% csrf_token %}
+                    <button type="submit" name="accept" class="cta-btn accept-btn">Accept</button>
+                    <button type="submit" name="reject" class="cta-btn reject-btn">Reject</button>
+                </form>
+            {% endif %}
+
+            <a href="{% url 'skill_exchange_list' %}" class="back-link"><i class="fas fa-arrow-left"></i> Back to Exchanges</a>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Babylon Skill Bartering Platform. All rights reserved.</p>
+    </footer>
+</body>
+</html>

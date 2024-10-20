@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skill Exchanges</title>
+</head>
+<body>
+    <h1>Your Skill Exchanges</h1>
+
+    <table>
+        <tr>
+            <th>Offered By</th>
+            <th>Requested By</th>
+            <th>Status</th>
+            <th>Type</th>
+            <th>Details</th>
+        </tr>
+        {% for exchange in exchanges %}
+        <tr>
+            <td>{{ exchange.offered_by.user.username }}</td>
+            <td>{{ exchange.requested_by.user.username }}</td>
+            <td>{{ exchange.status }}</td>
+            <td>{% if exchange.is_paid_service %}Paid{% else %}Barter{% endif %}</td>
+            <td><a href="{% url 'skill_exchange_detail' exchange.id %}">View</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <a href="{% url 'create_skill_exchange' %}">Create New Exchange</a>
+    <a href="{% url 'home' %}">Back to Home</a>
+</body>
+</html>

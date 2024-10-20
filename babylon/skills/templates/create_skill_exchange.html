@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Skill Exchange</title>
+</head>
+<body>
+    <h1>Create New Skill Exchange</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+        
+        <label for="requested_by">Select the user to exchange skills with:</label>
+        <select name="requested_by">
+            {% for user in users %}
+                <option value="{{ user.id }}">{{ user.user.username }} - {{ user.location }}</option>
+            {% endfor %}
+        </select>
+        <br>
+
+        <label for="skills_offered">Select the skills you are offering:</label>
+        <select name="skills_offered" multiple>
+            {% for skill in skills %}
+                <option value="{{ skill.id }}">{{ skill.name }}</option>
+            {% endfor %}
+        </select>
+        <br>
+
+        <label for="skills_requested">Select the skills you are requesting:</label>
+        <select name="skills_requested" multiple>
+            {% for skill in skills %}
+                <option value="{{ skill.id }}">{{ skill.name }}</option>
+            {% endfor %}
+        </select>
+        <br>
+
+        <label for="is_paid_service">Is this a paid service?</label>
+        <input type="checkbox" name="is_paid_service">
+        <br>
+
+        <label for="price">Price (if paid service):</label>
+        <input type="text" name="price">
+        <br>
+
+        <button type="submit">Create Exchange</button>
+    </form>
+
+    <a href="{% url 'skill_exchange_list' %}">Back to Exchanges</a>
+</body>
+</html>
